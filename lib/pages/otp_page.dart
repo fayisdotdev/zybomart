@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:zybomart/blocs/auth/auth_event.dart';
-import 'package:zybomart/pages/homepage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zybomart/pages/homepage.dart';
 import '../blocs/auth/auth_bloc.dart';
+import '../blocs/auth/auth_event.dart';
+import '../blocs/auth/auth_state.dart';
 
 class OtpPage extends StatelessWidget {
   final String phone;
+  final bool userExists;
   final TextEditingController otpController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
-  OtpPage({required this.phone});
+  OtpPage({required this.phone, required this.userExists});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,10 @@ class OtpPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Enter OTP', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            Text(
+              'Enter OTP',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 20),
             TextField(
               controller: otpController,
@@ -28,15 +34,50 @@ class OtpPage extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
+            if (!userExists) ...[
+              SizedBox(height: 20),
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Full Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Mock login success
-                context.read<AuthBloc>().add(LoginSuccess());
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is Authenticated) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => HomePage()),
+                    (route) => false,
+                  );
+                } else if (state is AuthError) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
+                }
               },
-              child: Text('Verify OTP'),
-            )
+              builder: (context, state) {
+                if (state is AuthLoading) return CircularProgressIndicator();
+                return ElevatedButton(
+                  onPressed: () {
+                    final firstName = userExists
+                        ? null
+                        : nameController.text.trim();
+                    debugPrint('Verify OTP pressed');
+                    debugPrint('Phone: $phone, First Name: $firstName');
+
+                    context.read<AuthBloc>().add(
+                      VerifyOtp(phone: phone, firstName: firstName),
+                    );
+                  },
+
+                  child: Text('Verify OTP'),
+                );
+              },
+            ),
           ],
         ),
       ),

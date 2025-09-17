@@ -7,23 +7,17 @@ abstract class AuthEvent extends Equatable {
 
 class RequestOtp extends AuthEvent {
   final String phone;
-
   RequestOtp(this.phone);
-
   @override
   List<Object?> get props => [phone];
 }
 
 class VerifyOtp extends AuthEvent {
   final String phone;
-  final String otp;
-
-  VerifyOtp({required this.phone, required this.otp});
-
+  final String? firstName;
+  VerifyOtp({required this.phone, this.firstName});
   @override
-  List<Object?> get props => [phone, otp];
+  List<Object?> get props => [phone, firstName ?? ''];
 }
-
-class LoginSuccess extends AuthEvent {}
 
 class Logout extends AuthEvent {}
