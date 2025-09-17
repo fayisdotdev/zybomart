@@ -17,9 +17,18 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(Duration(seconds: 2), () {
       final authState = context.read<AuthBloc>().state;
       if (authState is Authenticated) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                HomePage(),
+          ),
+        );
       } else {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginPage()));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => LoginPage()),
+        );
       }
     });
   }
@@ -27,7 +36,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Zybomart', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),
+      body: Center(
+        child: Text(
+          'Zybomart',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 }

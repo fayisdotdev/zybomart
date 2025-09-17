@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => OtpPage(
                         phone: state.phone,
-                        userExists: state.userExists,
+                        userExists: state.userExists, otp: state.otp,
                       ),
                     ),
                   );

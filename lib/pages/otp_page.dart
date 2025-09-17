@@ -8,10 +8,15 @@ import '../blocs/auth/auth_state.dart';
 class OtpPage extends StatelessWidget {
   final String phone;
   final bool userExists;
+  final String otp; // <-- Add this line
   final TextEditingController otpController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
 
-  OtpPage({required this.phone, required this.userExists});
+  OtpPage({
+    required this.phone,
+    required this.userExists,
+    required this.otp,
+  }); // <-- Update constructor
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +29,11 @@ class OtpPage extends StatelessWidget {
             Text(
               'Enter OTP',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'For testing, enter this OTP: $otp', // <-- Show OTP
+              style: TextStyle(fontSize: 18, color: Colors.red),
             ),
             SizedBox(height: 20),
             TextField(
@@ -39,7 +49,7 @@ class OtpPage extends StatelessWidget {
               TextField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  labelText: 'Full Name',
+                  labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
               ),
