@@ -11,17 +11,32 @@ class AuthLoading extends AuthState {}
 
 class OtpSent extends AuthState {
   final String phone;
-  final bool userExists; // true if user exists, false → show register
-  OtpSent({required this.phone, required this.userExists});
+  final bool userExists;
+  final String otp; // add this
+
+  OtpSent({
+    required this.phone,
+    required this.userExists,
+    required this.otp,
+  });
+
   @override
-  List<Object?> get props => [phone, userExists];
+  List<Object?> get props => [phone, userExists, otp];
 }
 
 class Authenticated extends AuthState {
   final String token;
-  Authenticated(this.token);
+  final String userName;
+  final String phone;
+
+  Authenticated({
+    required this.token,
+    required this.userName,
+    required this.phone,
+  });
+
   @override
-  List<Object?> get props => [token];
+  List<Object?> get props => [token, userName, phone];
 }
 
 class AuthError extends AuthState {
