@@ -63,8 +63,12 @@ class AuthRepository {
   }
 
   // Fetch user profile
+  // Fetch user profile
   Future<Map<String, dynamic>> fetchUserProfile(String token) async {
     try {
+      debugPrint(
+        'Fetching user profile with token: $token',
+      ); // <-- Debug line added
       final response = await _dio.get(
         'https://skilltestflutter.zybotechlab.com/user-data/',
         options: Options(
@@ -75,6 +79,13 @@ class AuthRepository {
         ),
       );
 
+      debugPrint(
+        'Profile response status: ${response.statusCode}',
+      ); // <-- Debug line added
+      debugPrint(
+        'Profile response data: ${response.data}',
+      ); // <-- Debug line added
+
       if (response.statusCode == 200) {
         return {
           'name': response.data['first_name'] ?? '',
@@ -84,6 +95,11 @@ class AuthRepository {
         throw Exception('Failed to fetch profile: ${response.statusCode}');
       }
     } catch (e) {
+      debugPrint('Error fetching profile: $e'); // <-- Debug line added
+      debugPrint(
+        'Requesting user profile at: https://skilltestflutter.zybotechlab.com/user-data/',
+      );
+      debugPrint('Authorization header: Bearer $token');
       throw Exception('Error fetching profile: $e');
     }
   }
