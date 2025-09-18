@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zybomart/pages/homepage.dart';
+import 'package:zybomart/pages/main_page.dart';
 import '../blocs/auth/auth_bloc.dart';
 import '../blocs/auth/auth_event.dart';
 import '../blocs/auth/auth_state.dart';
@@ -60,7 +60,7 @@ class OtpPage extends StatelessWidget {
                 if (state is Authenticated) {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) => HomePage()),
+                    MaterialPageRoute(builder: (_) => const MainPage()),
                     (route) => false,
                   );
                 } else if (state is AuthError) {

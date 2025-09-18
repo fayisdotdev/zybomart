@@ -7,60 +7,74 @@ class AuthRepository {
   final FlutterSecureStorage storage = FlutterSecureStorage();
 
   // Check if user exists and get OTP
-  Future<Map<String, dynamic>> isUserExists(String phone) async {
-    try {
-      final response = await _dio.post(
-        'https://skilltestflutter.zybotechlab.com/api/verify/',
-        data: {'phone_number': phone},
-        options: Options(headers: {'Content-Type': 'application/json'}),
-      );
+Future<Map<String, dynamic>> isUserExists(String phone) async {
+  try {
+    debugPrint('=== isUserExists Request ===');
+    debugPrint('URL: https://skilltestflutter.zybotechlab.com/api/verify/');
+    debugPrint('Body: {phone_number: $phone}');
 
-      if (response.statusCode == 200) {
-        return {
-          'userExists': response.data['user'] ?? false,
-          'otp': response.data['otp']?.toString() ?? '',
-        };
-      } else {
-        throw Exception('Unexpected status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Failed to verify user: $e');
+    final response = await _dio.post(
+      'https://skilltestflutter.zybotechlab.com/api/verify/',
+      data: {'phone_number': phone},
+      options: Options(headers: {'Content-Type': 'application/json'}),
+    );
+
+    debugPrint('=== isUserExists Response ===');
+    debugPrint('Status: ${response.statusCode}');
+    debugPrint('Data: ${response.data}');
+
+    if (response.statusCode == 200) {
+      return {
+        'userExists': response.data['user'] ?? false,
+        'otp': response.data['otp']?.toString() ?? '',
+      };
+    } else {
+      throw Exception('Unexpected status code: ${response.statusCode}');
     }
+  } catch (e, stack) {
+    debugPrint('Error in isUserExists: $e');
+    debugPrint('Stacktrace: $stack');
+    throw Exception('Failed to verify user: $e');
   }
+}
 
-  // Login/Register
-  Future<Map<String, dynamic>> loginOrRegister(
-    String phone, {
-    String? firstName,
-  }) async {
-    try {
-      debugPrint('=== Login/Register request body ===');
-      debugPrint('Phone: $phone, First Name: ${firstName ?? ''}');
+// Login/Register
+Future<Map<String, dynamic>> loginOrRegister(
+  String phone, {
+  String? firstName,
+}) async {
+  try {
+    debugPrint('=== loginOrRegister Request ===');
+    debugPrint('URL: https://skilltestflutter.zybotechlab.com/api/login-register/');
+    debugPrint('Body: {phone_number: $phone, first_name: ${firstName ?? ''}}');
 
-      final response = await _dio.post(
-        'https://skilltestflutter.zybotechlab.com/api/login-register/',
-        data: {'phone_number': phone, 'first_name': firstName ?? ''},
-        options: Options(headers: {'Content-Type': 'application/json'}),
-      );
+    final response = await _dio.post(
+      'https://skilltestflutter.zybotechlab.com/api/login-register/',
+      data: {'phone_number': phone, 'first_name': firstName ?? ''},
+      options: Options(headers: {'Content-Type': 'application/json'}),
+    );
 
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response data: ${response.data}');
+    debugPrint('=== loginOrRegister Response ===');
+    debugPrint('Status: ${response.statusCode}');
+    debugPrint('Data: ${response.data}');
 
-      if (response.statusCode == 200 && response.data['token'] != null) {
-        final token = response.data['token']['access'] ?? '';
-        final name = response.data['name'] ?? firstName ?? '';
-        await storage.write(key: 'jwt_token', value: token);
-        await storage.write(key: 'user_phone', value: phone);
-        await storage.write(key: 'user_name', value: name);
-        return {'token': token, 'phone': phone, 'name': name};
-      } else {
-        throw Exception('No token received from API');
-      }
-    } catch (e) {
-      debugPrint('Error in loginOrRegister: $e');
-      throw Exception('Login/Register failed: $e');
+    if (response.statusCode == 200 && response.data['token'] != null) {
+      final token = response.data['token']['access'] ?? '';
+      final name = response.data['name'] ?? firstName ?? '';
+      await storage.write(key: 'jwt_token', value: token);
+      await storage.write(key: 'user_phone', value: phone);
+      await storage.write(key: 'user_name', value: name);
+      return {'token': token, 'phone': phone, 'name': name};
+    } else {
+      throw Exception('No token received from API');
     }
+  } catch (e, stack) {
+    debugPrint('Error in loginOrRegister: $e');
+    debugPrint('Stacktrace: $stack');
+    throw Exception('Login/Register failed: $e');
   }
+}
+
 
   // Fetch user profile
   // Fetch user profile

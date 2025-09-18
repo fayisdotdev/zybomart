@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zybomart/blocs/auth/auth_state.dart';
 import 'pages/splash_page.dart';
-import 'pages/login_page.dart';
-import 'pages/otp_page.dart';
 import 'blocs/auth/auth_bloc.dart';
 
 class MyApp extends StatelessWidget {
