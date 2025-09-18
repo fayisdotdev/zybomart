@@ -12,35 +12,43 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   // Keep track of all wishlisted IDs
   final Set<int> _wishlistIds = {};
 
-  WishlistBloc({
-    required this.wishlistRepository,
-    required this.storage,
-  }) : super(WishlistInitial()) {
-    on<ToggleWishlist>((event, emit) async {
+  WishlistBloc({required this.wishlistRepository, required this.storage})
+    : super(WishlistInitial()) {
+    on<FetchWishlist>((event, emit) async {
       emit(WishlistLoading());
-
       try {
         final token = await storage.read(key: 'jwt_token');
         if (token == null || token.isEmpty) {
           emit(WishlistError("No token found. Please login again."));
           return;
         }
+        final ids = await wishlistRepository.fetchWishlist(token: token);
+        _wishlistIds
+          ..clear()
+          ..addAll(ids);
+        emit(WishlistLoaded(wishlistIds: Set.from(_wishlistIds)));
+      } catch (e) {
+        emit(WishlistError(e.toString()));
+      }
+    });
 
-    await wishlistRepository.toggleWishlist(
-  productId: event.productId,
-  token: token,
-);
-
-// Instead of using `added`, toggle manually
-if (_wishlistIds.contains(event.productId)) {
-  _wishlistIds.remove(event.productId);
-} else {
-  _wishlistIds.add(event.productId);
-}
-
-emit(WishlistLoaded(wishlistIds: Set.from(_wishlistIds)));
-
-
+    on<ToggleWishlist>((event, emit) async {
+      emit(WishlistLoading());
+      try {
+        final token = await storage.read(key: 'jwt_token');
+        if (token == null || token.isEmpty) {
+          emit(WishlistError("No token found. Please login again."));
+          return;
+        }
+        await wishlistRepository.toggleWishlist(
+          productId: event.productId,
+          token: token,
+        );
+        // After toggling, fetch the updated wishlist from API
+        final ids = await wishlistRepository.fetchWishlist(token: token);
+        _wishlistIds
+          ..clear()
+          ..addAll(ids);
         emit(WishlistLoaded(wishlistIds: Set.from(_wishlistIds)));
       } catch (e) {
         emit(WishlistError(e.toString()));
