@@ -44,11 +44,11 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, color: Colors.red, size: 60),
+          const Icon(Icons.error_outline, color: Colors.red, size: 60),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             "Oops! Something went wrong",
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
@@ -76,6 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
         : "Unknown User";
     final phone = profile['phone_number'] ?? "-";
 
+    final String initial =
+        (name.isNotEmpty ? name[0].toUpperCase() : "?"); // first letter
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -96,9 +99,17 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage("assets/profile_placeholder.png"),
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    initial,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFAB0000),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
