@@ -19,7 +19,7 @@ best practices for scalable Flutter development, including:
 - Wishlist management
 - Banner carousel
 - Profile section
-- Animated splash screen
+- Splash screen
 - Modular and reusable codebase
 
 ## Getting Started
