@@ -7,10 +7,10 @@ class ProductGrid extends StatelessWidget {
   final void Function(Product) onWishlistToggle;
 
   const ProductGrid({
-    Key? key,
+    super.key,
     required this.products,
     required this.onWishlistToggle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

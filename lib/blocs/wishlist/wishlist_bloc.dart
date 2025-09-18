@@ -33,7 +33,15 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     });
 
     on<ToggleWishlist>((event, emit) async {
-      emit(WishlistLoading());
+      // Update local state instantly for UI responsiveness
+      if (_wishlistIds.contains(event.productId)) {
+        _wishlistIds.remove(event.productId);
+      } else {
+        _wishlistIds.add(event.productId);
+      }
+      emit(WishlistLoaded(wishlistIds: Set.from(_wishlistIds)));
+
+      // Sync with backend
       try {
         final token = await storage.read(key: 'jwt_token');
         if (token == null || token.isEmpty) {

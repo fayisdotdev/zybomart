@@ -38,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  /// Error UI with retry button
   Widget _buildErrorUI(String message) {
     return Center(
       child: Column(
@@ -69,7 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  /// Profile UI
   Widget _buildProfileUI(Map<String, dynamic> profile) {
     final name = profile['name']?.toString().isNotEmpty == true
         ? profile['name']
@@ -77,12 +75,11 @@ class _ProfilePageState extends State<ProfilePage> {
     final phone = profile['phone_number'] ?? "-";
 
     final String initial =
-        (name.isNotEmpty ? name[0].toUpperCase() : "?"); // first letter
+        (name.isNotEmpty ? name[0].toUpperCase() : "?");  
 
     return SingleChildScrollView(
       child: Column(
         children: [
-          // Top header with background
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 40),

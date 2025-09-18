@@ -8,7 +8,7 @@ import '../blocs/auth/auth_state.dart';
 class OtpPage extends StatefulWidget {
   final String phone;
   final bool userExists;
-  final String otp; // <-- testing otp
+  final String otp; 
 
   const OtpPage({
     super.key,
@@ -60,14 +60,12 @@ class _OtpPageState extends State<OtpPage> {
               children: [
                 const SizedBox(height: 40),
             
-                // Title
                 const Text(
                   "Enter OTP",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
             
-                // Subtitle
                 Text(
                   "We’ve sent a 4-digit OTP to +91 ${widget.phone}",
                   style: const TextStyle(fontSize: 16, color: Colors.black54),

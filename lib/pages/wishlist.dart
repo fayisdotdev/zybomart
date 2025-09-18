@@ -81,14 +81,13 @@ class _ShimmerWishlistGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      // ✅ scroll enabled now
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.65,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
       ),
-      itemCount: 6, // number of shimmer cards
+      itemCount: 6, 
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
@@ -101,12 +100,10 @@ class _ShimmerWishlistGrid extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Image placeholder
                 Expanded(
                   child: Container(color: Colors.white),
                 ),
                 const SizedBox(height: 8),
-                // Text placeholder
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Container(height: 14, color: Colors.white),

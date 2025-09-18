@@ -21,8 +21,6 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-
-              // Title
               const Text(
                 "Login",
                 style: TextStyle(
@@ -33,7 +31,6 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
 
-              // Subtitle
               const Text(
                 "Let’s Connect with ZyboMart",
                 style: TextStyle(
@@ -43,7 +40,6 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Phone input row
               Row(
                 children: [
                   Container(
@@ -152,7 +148,6 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Terms and Privacy
               Center(
                 child: Text(
                   "By Continuing you accepting the Terms of Use &\nPrivacy Policy",

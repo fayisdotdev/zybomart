@@ -79,14 +79,13 @@ class _HomePageState extends State<HomePage> {
             SingleChildScrollView(
               padding: const EdgeInsets.only(
                 top: 100,
-              ), // leave space for floating search
+              ), 
               child: Column(
                 children: [
                   const SizedBox(height: 20), // gap between search and banners
                   // Banners Carousel
                   BlocBuilder<BannerBloc, BannerState>(
                     builder: (context, state) {
-                      // Banners Loading
                       if (state is BannerLoading) {
                         return SizedBox(
                           height: 180,

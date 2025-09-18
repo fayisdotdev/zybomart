@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:zybomart/pages/homepage.dart';
 import 'package:zybomart/pages/wishlist.dart';
@@ -14,15 +16,15 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(),      // Home Page
-    const WishlistPage(),  // Wishlist Page
-    const ProfilePage(),   // Profile Page
+    const HomePage(),     
+    const WishlistPage(),   
+    const ProfilePage(),    
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true, // so nav bar floats nicely
+      extendBody: true,      
       body: _pages[_currentIndex],
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12.0),
