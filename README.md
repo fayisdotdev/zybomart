@@ -16,10 +16,10 @@ best practices for scalable Flutter development, including:
 
 - User authentication with OTP
 - Product listing and search
-- Wishlist management (instant toggle)
+- Wishlist management
 - Banner carousel
 - Profile section
-- Animated splash screen
+- Splash screen
 - Modular and reusable codebase
 
 ## Getting Started
